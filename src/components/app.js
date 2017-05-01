@@ -13,7 +13,7 @@ export default class App extends React.Component {
         return (
             <div>
                 <h1>Hello world</h1>
-                <h1>{this.props.store.getState()}</h1>
+                <h1>{this.props.store.getState().number}</h1>
                 <input type="button" value="Increment" onClick={this.onIncrement.bind(this)} />
                 <input type="button" value="Decrement" onClick={this.onDecrement.bind(this)} />
             </div>
