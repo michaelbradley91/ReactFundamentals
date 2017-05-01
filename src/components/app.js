@@ -1,57 +1,21 @@
-import TodosList from './todos-list'
-import CreateTodo from './create-todo'
-
-const todos = [
-    {
-        task: 'make React tutorial',
-        isCompleted: true
-    },
-    {
-        task: 'eat dinner',
-        isCompleted: true
-    }
-]
 
 export default class App extends React.Component {
-    constructor() {
-        super()
-        
-        this.state = {
-            todos
-        }
+
+    onIncrement() {
+        this.props.store.dispatch({ type: 'INCREMENT' })
     }
 
-    createTodo(todo) {
-        let task = {
-            task: todo,
-            isCompleted: false
-        }
-        this.setState({ todos: [...this.state.todos, task] })
-    }
-
-    deleteTodo(todo) {
-        this.setState({ todos: this.state.todos.filter(t => t.task !== todo)})
-    }
-
-    updateTodo(index, newTodo) {
-        this.state.todos[index] = {
-            task: newTodo,
-            isCompleted: false
-        }
-
-        this.setState({ todos: this.state.todos })
+    onDecrement() {
+        this.props.store.dispatch({ type: 'DECREMENT' })
     }
 
     render() {
         return (
             <div>
-                <h1>React ToDos App</h1>
-                <CreateTodo createTodo={this.createTodo.bind(this)} />
-                <TodosList 
-                    todos={this.state.todos}
-                    deleteTodo={this.deleteTodo.bind(this)}
-                    updateTodo={this.updateTodo.bind(this)}
-                />
+                <h1>Hello world</h1>
+                <h1>{this.props.store.getState()}</h1>
+                <input type="button" value="Increment" onClick={this.onIncrement.bind(this)} />
+                <input type="button" value="Decrement" onClick={this.onDecrement.bind(this)} />
             </div>
         )
     }
