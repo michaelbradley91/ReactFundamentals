@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom'
 import App from 'components/app'
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { createDevTools } from 'redux-devtools';
 import LogMonitor from 'redux-devtools-log-monitor';
 import DockMonitor from 'redux-devtools-dock-monitor';
@@ -31,9 +31,9 @@ const DevTools = createDevTools(
 );
 
 const render = () => {
-    ReactDOM.render(<div><App store={store} /><DevTools store={store} /></div>, document.getElementById('app'))
+    ReactDOM.render(<div><App store={store} />{!window.devToolsExtension && <DevTools store={store} />}</div>, document.getElementById('app'))
 }
 
-const store = createStore(counter, DevTools.instrument())
+const store = createStore(counter, compose(window.devToolsExtension ? window.devToolsExtension() :DevTools.instrument()))
 store.subscribe(render)
 render()
